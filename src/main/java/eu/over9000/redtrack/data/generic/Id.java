@@ -1,4 +1,4 @@
-package eu.over9000.redtrack.data;
+package eu.over9000.redtrack.data.generic;
 
 /**
  * Created by Jan on 12.07.2015.

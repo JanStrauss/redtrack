@@ -2,6 +2,7 @@ package eu.over9000.redtrack.rest;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -27,33 +28,47 @@ public class RestRequestWrapper {
 	}
 	
 	private Client initClient() {
-		ObjectMapper mapper = new ObjectMapper();
+		final ObjectMapper mapper = new ObjectMapper();
 		mapper.registerModule(new JSR310Module());
 		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 		
-		JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
+		final JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
 		provider.setMapper(mapper);
 		
-		ClientConfig clientConfig = new ClientConfig();
+		final ClientConfig clientConfig = new ClientConfig();
 		clientConfig.register(HttpAuthenticationFeature.basicBuilder().nonPreemptive().credentials(Configuration.getValue("username"), Configuration.getValue("password")).build());
 		clientConfig.register(provider);
 		
 		return ClientBuilder.newClient(clientConfig);
 	}
 	
-	public <T> T performRequest(Class<T> entityType, String resource) throws RestException {
-		String targetURL = Configuration.getValue("base_url") + resource;
+	public <returnType> returnType performGet(final Class<returnType> returnType, final String resource) throws RestException {
+		final WebTarget webTarget = buildTarget(resource);
 
-		System.out.println("TARGET=" + targetURL);
-
-		WebTarget webResource = client.target(targetURL);
-
-		Response response = webResource.request(MediaType.APPLICATION_JSON_TYPE).get();
+		final Response response = webTarget.request(MediaType.APPLICATION_JSON_TYPE).get();
 
 		if (response.getStatus() != 200) {
 			throw new RestException(response.getStatus(), response.getStatusInfo(), response.readEntity(String.class));
 		}
 
-		return response.readEntity(entityType);
+		return response.readEntity(returnType);
+	}
+
+	public <returnType> returnType performPost(final Class<returnType> returnType, final String resource, final Object toPost) throws RestException {
+		final WebTarget webTarget = buildTarget(resource);
+
+		final Response response = webTarget.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(toPost));
+
+		if (response.getStatus() != 201) {
+			throw new RestException(response.getStatus(), response.getStatusInfo(), response.readEntity(String.class));
+		}
+
+		return response.readEntity(returnType);
+	}
+
+	private WebTarget buildTarget(final String resource) {
+		final String targetURL = Configuration.getValue("base_url") + resource;
+		System.out.println("TARGET=" + targetURL);
+		return client.target(targetURL);
 	}
 }

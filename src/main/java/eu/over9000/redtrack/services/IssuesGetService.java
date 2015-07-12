@@ -6,8 +6,8 @@ import java.util.List;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
-import eu.over9000.redtrack.data.Issue;
-import eu.over9000.redtrack.data.IssueResponse;
+import eu.over9000.redtrack.data.issue.Issue;
+import eu.over9000.redtrack.data.issue.IssueResponse;
 import eu.over9000.redtrack.persistence.Configuration;
 import eu.over9000.redtrack.rest.RestException;
 import eu.over9000.redtrack.rest.RestRequestWrapper;
@@ -15,7 +15,7 @@ import eu.over9000.redtrack.rest.RestRequestWrapper;
 /**
  * Service to retrieve the open issues for the current user
  */
-public class IssuesRetrieverService extends Service<List<Issue>> {
+public class IssuesGetService extends Service<List<Issue>> {
 
 	@Override
 	protected Task<List<Issue>> createTask() {
@@ -27,7 +27,7 @@ public class IssuesRetrieverService extends Service<List<Issue>> {
 		};
 	}
 
-	private static List<Issue> performServiceTask() throws Exception {
+	private List<Issue> performServiceTask() throws Exception {
 		final List<Issue> result = new ArrayList<>();
 
 		RestRequestWrapper wrapper = new RestRequestWrapper();
@@ -38,7 +38,7 @@ public class IssuesRetrieverService extends Service<List<Issue>> {
 
 		while (offset < total) {
 			try {
-				IssueResponse output = wrapper.performRequest(IssueResponse.class, "issues.json?status_id=open&assigned_to_id=me&offset=" + offset + "&limit=" + limit);
+				IssueResponse output = wrapper.performGet(IssueResponse.class, "issues.json?status_id=open&assigned_to_id=me&offset=" + offset + "&limit=" + limit);
 				System.out.println(output);
 				result.addAll(output.getIssues());
 
@@ -56,6 +56,6 @@ public class IssuesRetrieverService extends Service<List<Issue>> {
 	public static void main(String[] args) throws Exception {
 		Configuration.load();
 
-		performServiceTask();
+		new IssuesGetService().performServiceTask();
 	}
 }
