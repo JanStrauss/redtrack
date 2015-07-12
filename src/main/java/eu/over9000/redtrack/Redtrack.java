@@ -1,30 +1,19 @@
 package eu.over9000.redtrack;
 
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
+
+import eu.over9000.redtrack.persistence.Configuration;
+import eu.over9000.redtrack.ui.MainWindow;
 
 /**
  * Created by Jan on 12.07.2015.
  */
-public class Redtrack extends Application {
+public class Redtrack {
 
 	public static void main(String[] args) {
-		launch(args);
+		Configuration.load();
+		Application.launch(MainWindow.class, args);
+		Configuration.save();
 	}
 
-	@Override
-	public void start(final Stage primaryStage) throws Exception {
-
-		Circle circ = new Circle(40, 40, 30);
-		Group root = new Group(circ);
-		Scene scene = new Scene(root, 400, 300);
-
-		primaryStage.setTitle("Redtrack");
-		primaryStage.setScene(scene);
-		primaryStage.show();
-
-	}
 }
