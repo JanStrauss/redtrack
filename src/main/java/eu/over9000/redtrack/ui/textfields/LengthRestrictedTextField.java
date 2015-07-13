@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
  */
 public class LengthRestrictedTextField extends TextField {
 
-	private static final int MAX_LENGTH = 5;
+	private static final int MAX_LENGTH = 255;
 
 	public void replaceText(final int start, final int end, final String text) {
 		final String oldValue = getText();
