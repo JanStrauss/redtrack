@@ -2,7 +2,7 @@
 
 time tracking app for redmine using javafx
 
-![Redtrack](https://i.imgur.com/zINq90d.png "Redtrack")
+![Redtrack](https://i.imgur.com/RhfPN3i.png "Redtrack")
 
 ## config
 
