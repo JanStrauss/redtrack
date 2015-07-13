@@ -1,5 +1,12 @@
 package eu.over9000.redtrack.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import eu.over9000.redtrack.persistence.Configuration;
+import org.glassfish.jersey.client.ClientConfig;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -7,68 +14,55 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-
-import eu.over9000.redtrack.persistence.Configuration;
-
 /**
  * Created by Jan on 12.07.2015.
  */
 public class RestRequestWrapper {
-	private final Client client;
+    private final Client client;
 
-	public RestRequestWrapper() {
-		this.client = initClient();
-	}
-	
-	private Client initClient() {
-		final ObjectMapper mapper = new ObjectMapper();
-		mapper.registerModule(new JSR310Module());
-		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-		
-		final JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
-		provider.setMapper(mapper);
-		
-		final ClientConfig clientConfig = new ClientConfig();
-		clientConfig.register(HttpAuthenticationFeature.basicBuilder().nonPreemptive().credentials(Configuration.getValue("username"), Configuration.getValue("password")).build());
-		clientConfig.register(provider);
-		
-		return ClientBuilder.newClient(clientConfig);
-	}
-	
-	public <returnType> returnType performGet(final Class<returnType> returnType, final String resource) throws RestException {
-		final WebTarget webTarget = buildTarget(resource);
+    public RestRequestWrapper() {
+        this.client = initClient();
+    }
 
-		final Response response = webTarget.request(MediaType.APPLICATION_JSON_TYPE).get();
+    private Client initClient() {
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JSR310Module());
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 
-		if (response.getStatus() != 200) {
-			throw new RestException(response.getStatus(), response.getStatusInfo(), response.readEntity(String.class));
-		}
+        final JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
+        provider.setMapper(mapper);
 
-		return response.readEntity(returnType);
-	}
+        final ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(provider);
 
-	public <returnType> returnType performPost(final Class<returnType> returnType, final String resource, final Object toPost) throws RestException {
-		final WebTarget webTarget = buildTarget(resource);
+        return ClientBuilder.newClient(clientConfig);
+    }
 
-		final Response response = webTarget.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(toPost));
+    public <returnType> returnType performGet(final Class<returnType> returnType, final String resource) throws RestException {
 
-		if (response.getStatus() != 201) {
-			throw new RestException(response.getStatus(), response.getStatusInfo(), response.readEntity(String.class));
-		}
+        final Response response = buildTarget(resource).request(MediaType.APPLICATION_JSON_TYPE).header("X-Redmine-API-Key", Configuration.getValue("api_key")).get();
 
-		return response.readEntity(returnType);
-	}
+        if (response.getStatus() != 200) {
+            throw new RestException(response.getStatus(), response.getStatusInfo(), response.readEntity(String.class));
+        }
 
-	private WebTarget buildTarget(final String resource) {
-		final String targetURL = Configuration.getValue("base_url") + resource;
-		System.out.println("TARGET=" + targetURL);
-		return client.target(targetURL);
-	}
+        return response.readEntity(returnType);
+    }
+
+    public <returnType> returnType performPost(final Class<returnType> returnType, final String resource, final Object toPost) throws RestException {
+
+        final Response response = buildTarget(resource).request(MediaType.APPLICATION_JSON_TYPE).header("X-Redmine-API-Key", Configuration.getValue("api_key")).post(Entity.json(toPost));
+
+        if (response.getStatus() != 201) {
+            throw new RestException(response.getStatus(), response.getStatusInfo(), response.readEntity(String.class));
+        }
+
+        return response.readEntity(returnType);
+    }
+
+    private WebTarget buildTarget(final String resource) {
+        final String targetURL = Configuration.getValue("base_url") + resource;
+        System.out.println("TARGET=" + targetURL);
+        return client.target(targetURL);
+    }
 }
