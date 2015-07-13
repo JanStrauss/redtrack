@@ -128,7 +128,7 @@ public class Stopwatch extends VBox {
 		
 		final long hours = duration.toHours();
 		final long minutes = duration.minusHours(hours).toMinutes();
-		final long seconds = duration.minusMinutes(minutes).getSeconds();
+		final long seconds = duration.minusHours(hours).minusMinutes(minutes).getSeconds();
 		
 		display.setText(String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
 	}
