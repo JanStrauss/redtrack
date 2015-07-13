@@ -103,7 +103,7 @@ public class MainWindow extends Application {
 			}
 
 			final java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
-			final java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(ImageIO.read(getClass().getResource("/images/icon.png")).getScaledInstance(16, 16, java.awt.Image.SCALE_SMOOTH));
+			final java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(ImageIO.read(getClass().getResource("/images/icon.png")).getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH));
 
 			trayIcon.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(final MouseEvent e) {
