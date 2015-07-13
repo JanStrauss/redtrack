@@ -53,9 +53,7 @@ public class MainWindow extends Application {
 		transferButton.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.ANGLE_DOUBLE_DOWN));
 		transferButton.setDisable(true);
 		transferButton.setFont(Font.font(24));
-		transferButton.setOnAction(event -> {
-			timeEntryMask.setHours(stopwatch.getDurationForJson());
-		});
+		transferButton.setOnAction(event -> timeEntryMask.setHours(stopwatch.getDurationForJson()));
 		transferContainer.getChildren().add(transferButton);
 		transferContainer.setBackground(new Background(new BackgroundFill(Color.valueOf("#F5F5F5"), CornerRadii.EMPTY, Insets.EMPTY)));
 		transferContainer.setPadding(new Insets(10));
@@ -108,7 +106,7 @@ public class MainWindow extends Application {
 			final java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(ImageIO.read(getClass().getResource("/images/icon.png")).getScaledInstance(16, 16, java.awt.Image.SCALE_SMOOTH));
 
 			trayIcon.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
+				public void mouseClicked(final MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON1) {
 						Platform.runLater(MainWindow.this::showStage);
 					}
