@@ -7,7 +7,6 @@ import javafx.concurrent.Task;
 
 import eu.over9000.redtrack.data.timeentry.activities.TimeEntryActivitiesResponse;
 import eu.over9000.redtrack.data.timeentry.activities.TimeEntryActivity;
-import eu.over9000.redtrack.persistence.Configuration;
 import eu.over9000.redtrack.rest.RestException;
 import eu.over9000.redtrack.rest.RestRequestWrapper;
 
@@ -41,8 +40,4 @@ public class TimeEntryActivitesGetService extends Service<List<TimeEntryActivity
 		}
 	}
 
-	public static void main(final String[] args) throws Exception {
-		Configuration.load();
-		new TimeEntryActivitesGetService().performServiceTask().forEach(System.out::println);
-	}
 }

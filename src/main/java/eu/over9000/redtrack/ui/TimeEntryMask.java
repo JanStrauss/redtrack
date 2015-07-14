@@ -207,6 +207,9 @@ public class TimeEntryMask extends StackPane {
 				callback.run();
 			}
 		});
+		s1.setOnFailed(event -> {
+			s1.getException().printStackTrace();
+		});
 		s1.start();
 	}
 

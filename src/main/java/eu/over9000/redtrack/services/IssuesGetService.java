@@ -30,32 +30,34 @@ public class IssuesGetService extends Service<List<Issue>> {
 	private List<Issue> performServiceTask() throws Exception {
 		final List<Issue> result = new ArrayList<>();
 
-		RestRequestWrapper wrapper = new RestRequestWrapper();
+		final RestRequestWrapper wrapper = new RestRequestWrapper();
 
+		final int limit = 100;
 		int offset = 0;
-		int limit = 100;
 		int total = limit;
 
-		while (offset < total) {
-			try {
-				IssueResponse output = wrapper.performGet(IssueResponse.class, "issues.json?status_id=open&assigned_to_id=me&offset=" + offset + "&limit=" + limit);
+		String baseResource = "issues.json?status_id=open";
+
+		if (Boolean.parseBoolean(Configuration.getValue("assigned_only"))) {
+			baseResource = baseResource + "&assigned_to_id=me";
+		}
+
+		try {
+			while (offset < total) {
+
+				final IssueResponse output = wrapper.performGet(IssueResponse.class, baseResource + "&offset=" + offset + "&limit=" + limit);
+
 				System.out.println(output);
 				result.addAll(output.getIssues());
 
 				total = output.getTotalCount();
 				offset += limit;
 
-			} catch (RestException e) {
-				e.printStackTrace();
 			}
+		} catch (final RestException e) {
+			e.printStackTrace();
 		}
 
 		return result;
-	}
-
-	public static void main(String[] args) throws Exception {
-		Configuration.load();
-
-		new IssuesGetService().performServiceTask();
 	}
 }
