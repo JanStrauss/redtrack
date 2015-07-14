@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
- * Created by Jan on 12.07.2015.
+ * TimeEntry POST JSON object
  */
 public class TimeEntryPost {
 

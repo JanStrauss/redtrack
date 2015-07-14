@@ -12,7 +12,7 @@ import eu.over9000.redtrack.rest.RestException;
 import eu.over9000.redtrack.rest.RestRequestWrapper;
 
 /**
- * Created by Jan on 12.07.2015.
+ * Service to retrieve time entries
  */
 public class TimeEntriesGetService extends Service<List<TimeEntry>> {
 	

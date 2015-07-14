@@ -18,7 +18,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import eu.over9000.redtrack.persistence.Configuration;
 
 /**
- * Created by Jan on 12.07.2015.
+ * Wrapper for REST requests.
  */
 public class RestRequestWrapper {
 	private final Client client;

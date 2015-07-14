@@ -6,7 +6,7 @@ import eu.over9000.redtrack.persistence.Configuration;
 import eu.over9000.redtrack.ui.MainWindow;
 
 /**
- * Created by Jan on 12.07.2015.
+ * load config, run application, save config
  */
 public class Redtrack {
 

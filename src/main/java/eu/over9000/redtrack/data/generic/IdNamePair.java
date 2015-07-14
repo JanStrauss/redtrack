@@ -1,7 +1,7 @@
 package eu.over9000.redtrack.data.generic;
 
 /**
- * Created by Jan on 12.07.2015.
+ * Id/Name JSON object
  */
 public class IdNamePair {
 	private int id;

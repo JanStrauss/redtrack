@@ -5,7 +5,7 @@ import java.util.List;
 import eu.over9000.redtrack.data.generic.PaginatedResponse;
 
 /**
- * Created by Jan on 12.07.2015.
+ * TimeEntryResponse JSON object
  */
 public class TimeEntryResponse extends PaginatedResponse {
 	private List<TimeEntry> timeEntries;

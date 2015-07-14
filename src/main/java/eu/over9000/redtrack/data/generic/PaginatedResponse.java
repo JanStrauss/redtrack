@@ -1,9 +1,9 @@
 package eu.over9000.redtrack.data.generic;
 
 /**
- * Created by Jan on 12.07.2015.
+ * super class for paginated responses
  */
-public class PaginatedResponse {
+public abstract class PaginatedResponse {
 	protected int totalCount;
 	protected int offset;
 	protected int limit;

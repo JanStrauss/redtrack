@@ -3,7 +3,7 @@ package eu.over9000.redtrack.data.timeentry.activities;
 import java.util.List;
 
 /**
- * Created by Jan on 12.07.2015.
+ * TimeEntryActivitiesResponse JSON Object
  */
 public class TimeEntryActivitiesResponse {
 	private List<TimeEntryActivity> timeEntryActivities;

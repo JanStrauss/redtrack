@@ -1,7 +1,7 @@
 package eu.over9000.redtrack.data.generic;
 
 /**
- * Created by Jan on 12.07.2015.
+ * Id  JSON object
  */
 public class Id {
 	private int id;

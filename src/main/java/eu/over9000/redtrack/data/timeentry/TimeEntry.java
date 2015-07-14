@@ -7,7 +7,7 @@ import eu.over9000.redtrack.data.generic.Id;
 import eu.over9000.redtrack.data.generic.IdNamePair;
 
 /**
- * Created by Jan on 12.07.2015.
+ * TimeEntry GET JSON object
  */
 public class TimeEntry {
 

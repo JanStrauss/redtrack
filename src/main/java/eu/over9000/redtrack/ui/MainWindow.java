@@ -1,11 +1,5 @@
 package eu.over9000.redtrack.ui;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -25,19 +19,18 @@ import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 
 /**
- * Created by Jan on 12.07.2015.
+ * Main UI Frame
  */
 public class MainWindow extends Application {
 	
 	private final VBox stopwatchContainer = new VBox();
 
 	private Button transferButton;
-	private Stage stage;
 
 	@Override
 
 	public void start(final Stage primaryStage) throws Exception {
-		this.stage = primaryStage;
+		final TrayIcon trayIcon = new TrayIcon(primaryStage);
 		
 		final javafx.scene.layout.VBox box = new VBox();
 
@@ -86,59 +79,12 @@ public class MainWindow extends Application {
 			}
 
 		});
-		addAppToTray();
+
+		trayIcon.addToTray();
 	}
 
 	public void onStopwatchStopAndReset(final boolean stop) {
 		transferButton.setDisable(!stop);
-	}
-
-	private void addAppToTray() {
-		try {
-			java.awt.Toolkit.getDefaultToolkit();
-
-			if (!java.awt.SystemTray.isSupported()) {
-				System.out.println("No system tray support, application exiting.");
-				Platform.exit();
-			}
-
-			final java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
-			final java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(ImageIO.read(getClass().getResource("/images/icon.png")).getScaledInstance(tray.getTrayIconSize().width, tray.getTrayIconSize().height, java.awt.Image.SCALE_SMOOTH));
-
-			trayIcon.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(final MouseEvent e) {
-					if (e.getButton() == MouseEvent.BUTTON1) {
-						Platform.runLater(MainWindow.this::showStage);
-					}
-				}
-			});
-
-			final java.awt.MenuItem openItem = new java.awt.MenuItem("Open Redtrack");
-			openItem.addActionListener(event -> Platform.runLater(this::showStage));
-
-			final java.awt.MenuItem exitItem = new java.awt.MenuItem("Exit");
-			exitItem.addActionListener(event -> {
-				Platform.exit();
-				tray.remove(trayIcon);
-			});
-
-			final java.awt.PopupMenu popup = new java.awt.PopupMenu();
-			popup.add(openItem);
-			popup.addSeparator();
-			popup.add(exitItem);
-			trayIcon.setPopupMenu(popup);
-
-			tray.add(trayIcon);
-		} catch (java.awt.AWTException | IOException e) {
-			System.out.println("Unable to init system tray");
-			e.printStackTrace();
-		}
-	}
-
-	private void showStage() {
-		stage.show();
-		stage.toFront();
-		stage.requestFocus();
 	}
 
 }

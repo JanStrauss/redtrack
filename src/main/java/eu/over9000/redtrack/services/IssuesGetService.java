@@ -13,7 +13,7 @@ import eu.over9000.redtrack.rest.RestException;
 import eu.over9000.redtrack.rest.RestRequestWrapper;
 
 /**
- * Service to retrieve the open issues for the current user
+ * Service to retrieve the open issues
  */
 public class IssuesGetService extends Service<List<Issue>> {
 

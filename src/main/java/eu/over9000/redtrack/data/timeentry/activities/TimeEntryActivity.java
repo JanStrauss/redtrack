@@ -1,7 +1,7 @@
 package eu.over9000.redtrack.data.timeentry.activities;
 
 /**
- * Created by Jan on 12.07.2015.
+ * TimeEntryActivity JSON Object
  */
 public class TimeEntryActivity {
 	private Integer id;

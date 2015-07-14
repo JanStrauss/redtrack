@@ -5,7 +5,7 @@ import java.util.List;
 import eu.over9000.redtrack.data.generic.PaginatedResponse;
 
 /**
- * Created by Jan on 12.07.2015.
+ * IssueResponse JSON object
  */
 public class IssueResponse extends PaginatedResponse {
 	private List<Issue> issues;

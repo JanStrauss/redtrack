@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
- * Created by Jan on 12.07.2015.
+ * Simple properties based config.
  */
 public class Configuration {
 	private static final Path PATH_TO_FILE = Paths.get(System.getProperty("user.home"), ".redtrack", "config.properties");

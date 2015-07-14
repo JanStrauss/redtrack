@@ -3,7 +3,7 @@ package eu.over9000.redtrack.rest;
 import javax.ws.rs.core.Response;
 
 /**
- * Created by Jan on 12.07.2015.
+ * Exception for REST based errors.
  */
 public class RestException extends Throwable {
 	public RestException(final int status, final Response.StatusType statusInfo, final String body) {

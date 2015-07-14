@@ -27,7 +27,7 @@ import eu.over9000.redtrack.ui.textfields.LengthRestrictedTextField;
 import eu.over9000.redtrack.ui.textfields.NumberTextField;
 
 /**
- * Created by Jan on 13.07.2015.
+ * Form to fill in a new time entry
  */
 public class TimeEntryMask extends StackPane {
 	final ObservableList<Issue> issues = FXCollections.observableArrayList();

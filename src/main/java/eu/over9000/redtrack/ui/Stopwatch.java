@@ -17,7 +17,7 @@ import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 
 /**
- * Created by Jan on 12.07.2015.
+ * Stopwatch ui element.
  */
 public class Stopwatch extends VBox {
 	

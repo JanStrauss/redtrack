@@ -5,7 +5,7 @@ import javafx.scene.control.ListCell;
 import eu.over9000.redtrack.data.issue.Issue;
 
 /**
- * Created by Jan on 12.07.2015.
+ * Cell for Issues
  */
 public class IssueListCell extends ListCell<Issue> {
 	@Override

@@ -3,7 +3,7 @@ package eu.over9000.redtrack.ui.textfields;
 import javafx.scene.control.TextField;
 
 /**
- * Created by Jan on 13.07.2015.
+ * Text field with a not perfect number restriction.
  */
 public class NumberTextField extends TextField {
 
